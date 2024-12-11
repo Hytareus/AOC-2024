@@ -1,0 +1,38 @@
+from itertools import product
+valuesump1 = 0
+valuesump2 = 0
+p2 = False
+
+def calc(nums, target):
+    n = len(nums)
+    ops = ["+","*","|"]
+    for i in product(ops, repeat=n-1):
+        result = nums[0]
+        for j, k in enumerate(i):
+            if k == "+":
+                result += nums[j+1]
+            elif k == "*":
+                result *= nums[j + 1]
+            elif p2 == True and k == "|":
+                result = int(str(result)+str(nums[j+1]))
+        if result == value:
+            return True
+    return False
+
+text = open ("AOC Day 7 Text.txt","r").read()
+for line in text.split("\n"):
+    value = int(line.split(":")[0])
+    oper = [int(x) for x in (line.split(":")[1]).split()]
+    p2 = False
+    if calc(oper, value) == True:
+        valuesump1 += value
+    else:
+        pass
+    p2 = True
+    if calc(oper, value) == True:
+        valuesump2 += value
+    else:
+        pass
+    
+print("P1: " + str(valuesump1))
+print("P2: " + str(valuesump2))
