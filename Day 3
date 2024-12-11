@@ -1,0 +1,22 @@
+import re
+mulsump1 = 0
+mulsump2 = 0
+
+text = open("AOC Day 3 Text.txt", "r").read()
+mullist = re.findall("mul\(\d+,\d+\)",open("AOC Day 3 Text.txt", "r").read())
+for i in mullist:
+    x = (i.split(",")[0]).split("(")[1]
+    y = (i.split(",")[1]).split(")")[0]
+    mulsump1 += int(x)*int(y)
+
+text = "do()" + str(text) + "don't()"
+dolist = re.findall(("do\(\)(?:.|\n)*?don't\(\)"),text)
+for i in dolist:
+    mullist = re.findall("mul\(\d+,\d+\)",str(i))
+    for j in mullist:
+        x = (j.split(",")[0]).split("(")[1]
+        y = (j.split(",")[1]).split(")")[0]
+        mulsump2 += int(x)*int(y)
+
+print("P1: " + str(mulsump1))
+print("P2: " + str(mulsump2))
