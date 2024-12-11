@@ -1,0 +1,12 @@
+list1 = []
+list2 = []
+difftot = 0
+with open("AOC Day 1 Text.txt") as file:
+    for line in file.readlines():
+        list1.append((line.split())[0])
+        list2.append((line.split())[1])
+list1 = sorted([int(x) for x in list1])
+list2 = sorted([int(y) for y in list2])
+for i in range(len(list1)):
+    difftot += abs(list1[i] - list2[i])
+print(difftot)
