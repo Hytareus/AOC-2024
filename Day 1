@@ -1,6 +1,7 @@
 list1 = []
 list2 = []
 difftot = 0
+simtot = 0
 with open("AOC Day 1 Text.txt") as file:
     for line in file.readlines():
         list1.append((line.split())[0])
@@ -9,4 +10,8 @@ list1 = sorted([int(x) for x in list1])
 list2 = sorted([int(y) for y in list2])
 for i in range(len(list1)):
     difftot += abs(list1[i] - list2[i])
-print(difftot)
+    sim = list2.count(list1[i])
+    simtot += sim*(list1[i])
+print("P1: " + str(difftot))
+print("P2: " + str(simtot))
+
