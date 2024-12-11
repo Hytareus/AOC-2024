@@ -1,0 +1,35 @@
+from functools import cmp_to_key
+ruledict = {}
+ntextlist = []
+midsump1 = 0
+midsump2 = 0
+
+def wrong(r):
+    for p, q in enumerate(r):
+        beforenums = ruledict.get(q,set())
+        if beforenums.intersection(r[:p]):
+            return True
+    return False
+
+data = open("AOC Day 5 Text.txt","r").read()
+rules,text = data.split("\n\n")
+for line in rules.splitlines():
+    prim,sec = line.split("|")
+    ruledict.setdefault(int(prim),set()).add(int(sec))
+textlist = [x.split(",") for x in text.split("\n")]
+
+for i in textlist:
+    i = [int(y) for y in i]
+    ntextlist.append(i)
+
+for j in ntextlist:
+    if not wrong(j):
+        midnum = j[len(j)//2]
+        midsump1 += midnum
+    if wrong(j):
+        fixedline = sorted(j,key=cmp_to_key(lambda f,g: (f in ruledict.get(g))-1))
+        midnum = fixedline[len(j)//2]
+        midsump2 += midnum
+
+print("P1: " + str(midsump1))
+print("P2: " + str(midsump2))
