@@ -18,13 +18,13 @@ arr.append(barrier)
 arr.insert(0,barrier)
 for row in arr:
     if "^" in row:
-        py,px = arr.index(row),row.index("^")
-        starty,startx = py,px
+        starty,startx = arr.index(row),row.index("^")
         break
     else:
         pass
     
 x,y = 0,-1
+py,px = starty,startx
 
 while inside == True:
     if arr[py+y][px+x] == "#":
