@@ -1,0 +1,27 @@
+p1safenum = 0
+p2safenum = 0
+
+def safe(a):
+    if a[0] > a[1]:
+        a.reverse()
+    for i in range(len(a)-1):
+        if not 1 <= a[i+1] - a[i] <= 3:
+            return False
+    return True
+    
+text = open("AOC Day 2 Text.txt","r").readlines()
+for line in text:
+    line = [int(x) for x in line.split()]
+    if line[0] > line[1]:
+        line.reverse()
+    if safe(line):
+        p1safenum += 1
+        p2safenum += 1
+    else:
+        for j in range(len(line)):
+            if safe(line[:j] + line[j+1:]):
+                p2safenum += 1
+                break
+
+print("P1: " + str(p1safenum))
+print("P2: " + str(p2safenum))
