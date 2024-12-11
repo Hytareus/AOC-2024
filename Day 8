@@ -1,0 +1,46 @@
+antinodes1 = set()
+antinodes2 = set()
+radiodict = {}
+
+text = open("AOC Day 8 Text.txt","r").readlines()
+rows,cols = len(text),len(text[0])-1
+arr = [[text[x][y] for y in range(cols)] for x in range(rows)]
+for i in arr:
+    for j,k in enumerate(i):
+        if arr[arr.index(i)][j] == ".":
+            pass
+        else:
+            radiodict.setdefault(k,set()).add((arr.index(i),j))
+
+def antinode1(p1, p2):
+    x1, y1 = p1
+    x2, y2 = p2
+    x3 = 2*x2 - x1
+    y3 = 2*y2 - y1
+    if 0 <= x3 < rows and 0 <= y3 < cols:
+        antinodes1.add((x3,y3))
+        
+def antinode2(p1, p2):
+    x1, y1 = p1
+    x2, y2 = p2
+    x3 = 2*x2 - x1
+    y3 = 2*y2 - y1
+    antinodes2.add((x2,y2))
+    while 0 <= x3 < rows and 0 <= y3 < cols:
+        antinodes2.add((x3,y3))
+        x3 += x2 - x1
+        y3 += y2 - y1
+
+for l in radiodict:
+    poslist = radiodict[l]
+    poslist = [[y,x] for x,y in poslist]
+    for m in range(len(poslist)):
+        for n in range(m):
+            rad1 = poslist[m]
+            rad2 = poslist[n]
+            antinode1(rad1,rad2)
+            antinode1(rad2,rad1)
+            antinode2(rad1,rad2)
+            antinode2(rad2,rad1)
+print("P1: " + str(len(antinodes1)))
+print("P2: " + str(len(antinodes2)))
