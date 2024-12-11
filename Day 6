@@ -1,0 +1,87 @@
+import copy
+direction = 0
+possum = 0
+pathsum = 0
+loopsum = 0
+barrier = []
+inside = True
+
+text = open("AOC Day 6 Text.txt","r").readlines()
+rows, cols = len(text),len(text[0])-1
+arr = [[text[x][y] for y in range(cols)] for x in range(rows)]
+for row in arr:
+    row.append("H")
+    row.insert(0,"H")
+for i in range(len(arr[0])):
+    barrier.append("H")
+arr.append(barrier)
+arr.insert(0,barrier)
+for row in arr:
+    if "^" in row:
+        py,px = arr.index(row),row.index("^")
+        starty,startx = py,px
+        break
+    else:
+        pass
+    
+x,y = 0,-1
+
+while inside == True:
+    if arr[py+y][px+x] == "#":
+        direction += 1
+    if direction%4 == 0:
+        x,y = 0,-1
+    if direction%4 == 1:
+        x,y = 1,0
+    if direction%4 == 2:
+        x,y = 0,1
+    if direction%4 == 3:
+        x,y = -1,0
+    if arr[py+y][px+x] == "H":
+        arr[py][px] = "X"
+        inside = False
+    else:
+        arr[py][px] = "X"
+        py,px = py+y,px+x
+        
+for i in arr:
+    Xnum = i.count("X")
+    possum += Xnum
+
+for i in range(rows+2):
+    for j in range(cols+2):
+        testarr = copy.deepcopy(arr)
+        pathsum = 0
+        inside = True
+        direction = 0
+        x,y = 0, -1
+        py,px = starty,startx
+        if testarr[i][j] == "X":
+            testarr[py][px] = "."
+            testarr[i][j] = "#"
+            while inside == True:
+                if testarr[py+y][px+x] == "H":
+                    inside = False
+                if testarr[py+y][px+x] == "#":
+                    direction += 1
+                    if direction%4 == 0:
+                        x,y = 0,-1
+                    if direction%4 == 1:
+                        x,y = 1,0
+                    if direction%4 == 2:
+                        x,y = 0,1
+                    if direction%4 == 3:
+                        x,y = -1,0
+                elif pathsum >= 10000:
+                    print(i,j)
+                    #loading animations are important for sanity
+                    loopsum += 1
+                    inside = False
+                else:
+                    pathsum += 1
+                    py,px = py+y,px+x
+        else:
+            pass
+
+print("P1: " + str(possum))
+print("P2: " + str(loopsum))
