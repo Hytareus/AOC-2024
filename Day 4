@@ -1,0 +1,23 @@
+word = "XMAS"
+wordsump1 = 0
+wordsump2 = 0
+
+text = open("AOC Day 4 Text.txt").readlines()
+cols, rows = len(text), len(text[0])-1
+dictarr = {(y,x):text[y][x] for y in range(cols) for x in range(rows)}
+diff = [(dy,dx) for dy in [-1,0,1] for dx in [-1,0,1]]
+
+for y, x in dictarr:
+    for dy,dx in diff:
+        foundnum = "".join(dictarr.get((y+dy*i, x+dx*i),"") for i in range(4))
+        if foundnum == word:
+            wordsump1 += 1
+
+    if dictarr[y,x] == "A":
+        X1 = dictarr.get((y-1,x-1),"") + dictarr.get((y+1,x+1),"")
+        X2 = dictarr.get((y-1,x+1),"") + dictarr.get((y+1,x-1),"")
+        if X1 in {"MS","SM"} and X2 in {"MS","SM"}:
+            wordsump2 += 1
+
+print("P1: " + str(wordsump1))
+print("P2: " + str(wordsump2))
