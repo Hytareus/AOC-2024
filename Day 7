@@ -24,12 +24,12 @@ for line in text.split("\n"):
     value = int(line.split(":")[0])
     oper = [int(x) for x in (line.split(":")[1]).split()]
     p2 = False
-    if calc(oper, value) == True:
+    if calc(oper, value):
         valuesump1 += value
     else:
         pass
     p2 = True
-    if calc(oper, value) == True:
+    if calc(oper, value):
         valuesump2 += value
     else:
         pass
